@@ -1,13 +1,16 @@
 
-const { SMA } = require('technicalindicators');
-const Binance = require('node-binance-api');
-const { APIKEY, APISECRET } = require('./env');
 
-
+import Binance from 'node-binance-api';
+import { APIKEY, APISECRET } from './env';
+import { listenSokCoins } from './ioBinance';
 
 const binance = new Binance().options({
     APIKEY,
     APISECRET,
+
 });
 
-console.log({ APIKEY, APISECRET });
+(async () => {
+    await listenSokCoins(binance)
+})();
+
