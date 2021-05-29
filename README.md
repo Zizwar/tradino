@@ -1,0 +1,2 @@
+# tradino
+test my botino
