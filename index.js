@@ -1,16 +1,12 @@
 
 
-import Binance from 'node-binance-api';
-import { APIKEY, APISECRET } from './env';
 import { listenSokCoins } from './ioBinance';
+import {candles} from './functions'
 
-const binance = new Binance().options({
-    APIKEY,
-    APISECRET,
-
-});
 
 (async () => {
-    await listenSokCoins(binance)
+   // await listenSokCoins(binance)
+ await candles();
+
 })();
 

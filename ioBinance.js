@@ -1,6 +1,6 @@
 
 import { EMA, BollingerBands as BB } from 'technicalindicators';
-import { config }  from './env';
+import { config } from './env';
 let requests = 1;
 let type = "buy"
 const a = [];
@@ -9,7 +9,19 @@ export const listenSokCoins = async (binance) => {
 
     // const hestory = await binance.promiseRequest('v1/time')
     //console.info(hestory)
-    console.info( await binance.futuresMarketBuy( 'BTCUSDT', 0.001 ) );
+    
+    binance.candlesticks("BTCUSDT", "5m", (error, ticks, symbol) => {
+        // Now you have the last 10 candles always
+        //console.log(ticks);
+        //fs.writeFile("json/candles/"+symbol+".json", JSON.stringify(ticks, null, 4), (err)=>{});
+        // You can iterate through this data as well
+        for (let tick of ticks) {
+            let [time, open, high, low, close, volume, closeTime, assetVolume, trades, buyBaseVolume, buyAssetVolume, ignored] = tick;
+            let timestamp = new Date(time).toLocaleString();
+            console.log(timestamp + " BTC: $" + close);
+        }
+    }, { limit: 10 });
+    //console.info( await binance.futuresMarketBuy( 'BTCUSDT', 0.001 ) );
     return;
     binance.websockets.chart("BTCUSDT", "1m", (symbol, interval, chart) => {
 
@@ -40,15 +52,15 @@ export const listenSokCoins = async (binance) => {
         open = open.substring(1, (open.length - 3))
         open = open.split(',').map(Number)
 
-       let close = JSON.stringify(body.c[0])
+        let close = JSON.stringify(body.c[0])
         close = close.substring(1, (close.length - 3))
         close = close.split(',').map(Number)
 
-       let high = JSON.stringify(body.h[0])
+        let high = JSON.stringify(body.h[0])
         high = high.substring(1, (high.length - 3))
         high = high.split(',').map(Number)
 
-       let low = JSON.stringify(body.l[0])
+        let low = JSON.stringify(body.l[0])
         low = low.substring(1, (low.length - 3))
         low = low.split(',').map(Number)
 
