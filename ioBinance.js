@@ -9,6 +9,8 @@ export const listenSokCoins = async (binance) => {
 
     // const hestory = await binance.promiseRequest('v1/time')
     //console.info(hestory)
+    console.info( await binance.futuresMarketBuy( 'BTCUSDT', 0.001 ) );
+    return;
     binance.websockets.chart("BTCUSDT", "1m", (symbol, interval, chart) => {
 
         var x, time;
