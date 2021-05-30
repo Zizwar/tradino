@@ -8,7 +8,7 @@ import { buyOrSell } from './helpers';
     //await candles();
     setInterval(async _ => {
         try {
-            const _listenMarket = await listenMarket({interval:"3m"}) || [];
+            const _listenMarket = await listenMarket({ interval: "3m" }) || [];
             const {
                 rsi,
                 upper,
@@ -16,12 +16,14 @@ import { buyOrSell } from './helpers';
                 sma,
                 ema,
                 close,
+                stochRsi:{stochRSI}
             } = _listenMarket;
-          //  console.log(_listenMarket)
+            //  console.log(_listenMarket)
             /******calcul critical here */
+           
             const _buyOrSell = buyOrSell(_listenMarket)
 
-            console.log(`===${_buyOrSell}|${close}$|rsi:${rsi}`)
+            console.log(`===${_buyOrSell}|$${close}|rsi:${rsi}|StochR:${stochRSI}`)
 
         } catch (error) {
             console.error(error)

@@ -30,10 +30,26 @@ export const listenMarket = async (args) => {
         const SM = SMA.calculate({ period: 5, values: closes });
         const EM = EMA.calculate({ period: 5, values: closes });
         const BB = BollingerBands.calculate({ period: 20, stdDev: 2, values: closes });
-       // const stochRsi = StochasticRSI.calculate({ period: 20, values: closes });
-        //const lastArr = (val)=>val.slice(-1)
+        const inputStochRSI = {
+            values: closes,
+            rsiPeriod: 9,
+            stochasticPeriod: 5,
+            kPeriod: 3,
+            dPeriod: 3,
+        };
+        const stochRsi = StochasticRSI.calculate(inputStochRSI);
+      //  console.info(stochRsi)
+        const lastArr = (val) => val.slice(-1)[0]
         const [{ upper, lower }] = BB.slice(-1)
-        return ({ rsi: RS.slice(-1)[0],  sma: SM.slice(-1)[0], ema: EM.slice(-1)[0], upper, lower, close: closes.slice(-1)[0] })
+        return ({
+            rsi: lastArr(RS),
+            stochRsi: lastArr(stochRsi),
+            sma: lastArr(SM),
+            ema: lastArr(EM),
+            upper,
+            lower,
+            close: lastArr(closes)
+        })
         //console.info( await binance.futuresMarketBuy( 'BTCUSDT', 0.001 ) );
     }
     catch (error) {
