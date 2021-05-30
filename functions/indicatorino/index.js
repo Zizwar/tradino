@@ -1,7 +1,7 @@
-import { SMA, EMA, BollingerBands, RSI } from 'technicalindicators';
+import { SMA, EMA, BollingerBands, RSI, StochasticRSI } from 'technicalindicators';
 import { candlesticks } from "../../lib/binance";
 
-export const RSIno = async (args) => {
+export const listenMarket = async (args) => {
     try {
         const { ticks = [], symbols } = await candlesticks(args);
         /*
@@ -30,9 +30,11 @@ export const RSIno = async (args) => {
         const SM = SMA.calculate({ period: 5, values: closes });
         const EM = EMA.calculate({ period: 5, values: closes });
         const BB = BollingerBands.calculate({ period: 20, stdDev: 2, values: closes });
+       // const stochRsi = StochasticRSI.calculate({ period: 20, values: closes });
         //const lastArr = (val)=>val.slice(-1)
         const [{ upper, lower }] = BB.slice(-1)
-        console.info({ RSI: RS.slice(-1)[0], upper, lower, SMA: SM.slice(-1)[0], EMA: EM.slice(-1)[0], closes: closes.slice(-1)[0] })
+        return ({ rsi: RS.slice(-1)[0],  sma: SM.slice(-1)[0], ema: EM.slice(-1)[0], upper, lower, close: closes.slice(-1)[0] })
+        //console.info( await binance.futuresMarketBuy( 'BTCUSDT', 0.001 ) );
     }
     catch (error) {
         console.log("ERR:", error)
