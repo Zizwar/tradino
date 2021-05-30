@@ -16,7 +16,7 @@ import { buyOrSell } from './helpers';
                 sma,
                 ema,
                 close,
-                stochRsi:{stochRSI}
+                stochRSI
             } = _listenMarket;
             //  console.log(_listenMarket)
             /******calcul critical here */

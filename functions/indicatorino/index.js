@@ -37,13 +37,14 @@ export const listenMarket = async (args) => {
             kPeriod: 3,
             dPeriod: 3,
         };
-        const stochRsi = StochasticRSI.calculate(inputStochRSI);
-      //  console.info(stochRsi)
+        const _stochRSI = StochasticRSI.calculate(inputStochRSI);
+        //  console.info(stochRsi)
         const lastArr = (val) => val.slice(-1)[0]
-        const [{ upper, lower }] = BB.slice(-1)
+        const [{ upper, lower }] = BB.slice(-1);
+        const { stochRSI } = lastArr(_stochRSI) || undefined
         return ({
             rsi: lastArr(RS),
-            stochRsi: lastArr(stochRsi),
+            stochRSI,
             sma: lastArr(SM),
             ema: lastArr(EM),
             upper,
